@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teks Classification</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .button {
+            max-width: 250px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        .container {
+            margin-top: 50px;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        .result-container {
+            margin-top: 40px;
+            text-align: left;
+            padding: 10px;
+        }
+
+        .result-container .result {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deteksi Berita Hoax</h1>
+        <form method="POST" action="/classify">
+            <div class="form-group">
+                <label for="news">Masukkan Teks Berita:</label>
+                <textarea class="form-control" id="news" name="news" rows="4" placeholder="Contoh: Sejak sebulan lalu, berita mengenai ikan lele yang disinyalir mengandung 3000 sel kanker berkembang pesat. Di dalam berita yang beredar, diketahui bahwa ikan lele di Haikou, provinsi Hainan, Cina tersebut dibudidayakan di sebuah kolam dengan sampah berbau menyengat, dilingkari kandang babi dan ayam...."></textarea>
+            </div>
+            <div class="button">
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </div>
+        </form>
+
+        {% if news %}
+            <div class="result-container">
+                <div class="result">
+                    <h2>Hasil Klasifikasi:</h2>
+                    <p><strong>Naive Bayes</strong>: Berita ini <strong>{{ output_nb }}</strong></p>
+                    <p><strong>Decision Tree</strong>: Berita ini <strong>{{ output_dt }}</strong></p>
+                    <p><strong>Logistic Regression</strong>: Berita ini <strong>{{ output_lr }}</strong></p>
+                    <p><strong>Random Forest Classifier</strong>: Berita ini <strong>{{ output_rfc }}</strong></p>
+                </div>
+                <div class="result">
+                    <h2>Teks Berita:</h2>
+                    <p>{{ news }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
