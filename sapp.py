@@ -42,10 +42,11 @@ with open("vectorizer.pkl", "rb") as f:
     vectorizer = pickle.load(f)
 
 # Set Streamlit app title
-st.title("Teks Classification")
+st.set_page_config(page_title="Deteksi Berita Hoax")
+st.title("Deteksi Berita Hoax")
 
 # Text input for news
-news = st.text_area("Masukkan Teks Berita:", height=200)
+news = st.text_area("Masukkan Teks Berita:", height=100)
 
 if st.button("Submit"):
     preprocessed_news = wordopt(news)
@@ -71,15 +72,24 @@ if st.button("Submit"):
     # Display classification results with border
     st.subheader("Hasil Klasifikasi:")
     with st.container():
-        st.write("**Naive Bayes**: Berita ini", output_nb)
-    with st.container():
-        st.write("**Decision Tree**: Berita ini", output_dt)
-    with st.container():
-        st.write("**Logistic Regression**: Berita ini", output_lr)
-    with st.container():
-        st.write("**Random Forest Classifier**: Berita ini", output_rfc)
+        if pred_nb[0] == 0:
+            st.success("**Naive Bayes**: Berita ini " + output_nb)
+        else:
+            st.error("**Naive Bayes**: Berita ini " + output_nb)
+        if pred_dt[0] == 0:
+            st.success("**Decision Tree**: Berita ini " + output_dt)
+        else:
+            st.error("**Decision Tree**: Berita ini " + output_dt)
+        if pred_lr[0] == 0:
+            st.success("**Logistic Regression**: Berita ini " + output_lr)
+        else:
+            st.error("**Logistic Regression**: Berita ini " + output_lr)
+        if pred_rfc[0] == 0:
+            st.success("**Random Forest Classifier**: Berita ini " + output_rfc)
+        else:
+            st.error("**Random Forest Classifier**: Berita ini " + output_rfc)
 
     # Display input news with border
     st.subheader("Teks Berita:")
     with st.container():
-        st.write(news)
+        st.info(news)
